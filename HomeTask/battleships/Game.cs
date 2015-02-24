@@ -75,5 +75,10 @@ namespace battleships
 			var cellHaveWoundedDiagonalNeighbour = diagonals.Any(d => Map[target.Add(d)] == MapCell.DeadOrWoundedShip);
 			return cellWasHitAlready || cellIsNearDestroyedShip || cellHaveWoundedDiagonalNeighbour;
 		}
+
+		public Game Create(Map map, Ai ai)
+		{
+			return new Game(map, ai);
+		}
 	}
 }

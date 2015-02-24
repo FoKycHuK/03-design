@@ -18,16 +18,21 @@ namespace battleships
 				Console.WriteLine("Usage: {0} <ai.exe>", Process.GetCurrentProcess().ProcessName);
 				return;
 			}
+			var aiPath = args[0];
 			var container = new StandardKernel();
 			container.Bind<Settings>().To<Settings>().WithConstructorArgument("settings.txt");
 			var settings = container.Get<Settings>();
-			container.Bind<AiTester>().To<AiTester>().WithConstructorArgument(LogManager.GetLogger("results"));
+			container.Bind<AiTester>().To<AiTester>()
+				.WithConstructorArgument(LogManager.GetLogger("results"))
+				.WithConstructorArgument(aiPath);
 			container.Bind<Random>().ToConstant(new Random(settings.RandomSeed));
+			container.Bind<Ai>().To<Ai>().WithConstructorArgument(aiPath);
+			container.Bind<Game>().To<Game>().WithConstructorArgument(container.Get<MapGenerator>().GenerateMap());
 			container.Bind<ProcessMonitor>().To<ProcessMonitor>()
-				.WithConstructorArgument( 
+				.WithConstructorArgument(
 					TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount))
 				.WithConstructorArgument((long)settings.MemoryLimit);
-			var aiPath = args[0];
+			
 			//var settings = new Settings("settings.txt");
 			//var logger = LogManager.GetLogger("results");
 			//var tester = new AiTester(settings, logger);
@@ -38,11 +43,7 @@ namespace battleships
 			//	settings.MemoryLimit);
 			if (File.Exists(aiPath))
 			{
-				container.Get<AiTester>().TestSingleFile(
-				aiPath,
-				container.Get<MapGenerator>(),
-				container.Get<GameVisualizer>(),
-				container.Get<ProcessMonitor>());
+				container.Get<AiTester>().TestSingleFile();
 			}
 			else
 				Console.WriteLine("No AI exe-file " + aiPath);
