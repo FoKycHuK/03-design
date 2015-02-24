@@ -7,19 +7,18 @@ namespace battleships
 {
 	public class AiTester
 	{
-		private static readonly Logger resultsLog = LogManager.GetLogger("results");
+		private readonly Logger resultsLog;
 		private readonly Settings settings;
 
-		public AiTester(Settings settings)
+		public AiTester(Settings settings, Logger resultsLog)
 		{
+            this.resultsLog = resultsLog;
 			this.settings = settings;
 		}
 
-		public void TestSingleFile(string exe)
+		public void TestSingleFile(string exe, MapGenerator gen, 
+            GameVisualizer vis, ProcessMonitor monitor)
 		{
-			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
-			var vis = new GameVisualizer();
-			var monitor = new ProcessMonitor(TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), settings.MemoryLimit);
 			var badShots = 0;
 			var crashes = 0;
 			var gamesPlayed = 0;

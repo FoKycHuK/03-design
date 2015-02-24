@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\external_packages\NLog.dll</HintPath>
     </Reference>
@@ -62,11 +66,30 @@
     <Compile Include="Vector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Ninject.3.2.3-unstable-012\Ninject.3.2.3-unstable-012.nupkg" />
     <None Include="README.md" />
     <None Include="settings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\net35\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\net35\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\net40\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\net40\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl2\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl2\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl3-wp\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl3-wp\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl3\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl3\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl4-windowsphone71\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl4-windowsphone71\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl4\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl4\Ninject.xml" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl5\Ninject.dll" />
+    <Content Include="Ninject.3.2.3-unstable-012\lib\sl5\Ninject.xml" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
