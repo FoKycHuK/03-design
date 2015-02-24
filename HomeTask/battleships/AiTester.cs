@@ -12,12 +12,12 @@ namespace battleships
 
 		public AiTester(Settings settings, Logger resultsLog)
 		{
-            this.resultsLog = resultsLog;
+			this.resultsLog = resultsLog;
 			this.settings = settings;
 		}
 
 		public void TestSingleFile(string exe, MapGenerator gen, 
-            GameVisualizer vis, ProcessMonitor monitor)
+			GameVisualizer vis, ProcessMonitor monitor)
 		{
 			var badShots = 0;
 			var crashes = 0;

@@ -10,7 +10,6 @@ namespace battleships
 {
 	public class Program
 	{
-        public static StandardKernel Container;
 		private static void Main(string[] args)
 		{
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -19,34 +18,34 @@ namespace battleships
 				Console.WriteLine("Usage: {0} <ai.exe>", Process.GetCurrentProcess().ProcessName);
 				return;
 			}
-            Container = new StandardKernel();
-            Container.Bind<Settings>().To<Settings>().WithConstructorArgument("settings.txt");
-            var settings = Container.Get<Settings>();
-            Container.Bind<Logger>().ToConstant(LogManager.GetLogger("results"));
-            Container.Bind<Random>().ToConstant(new Random(settings.RandomSeed));
-            Container.Bind<ProcessMonitor>().To<ProcessMonitor>()
-                .WithConstructorArgument( 
-                    TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount))
-                .WithConstructorArgument((long)settings.MemoryLimit);
+			var container = new StandardKernel();
+			container.Bind<Settings>().To<Settings>().WithConstructorArgument("settings.txt");
+			var settings = container.Get<Settings>();
+			container.Bind<AiTester>().To<AiTester>().WithConstructorArgument(LogManager.GetLogger("results"));
+			container.Bind<Random>().ToConstant(new Random(settings.RandomSeed));
+			container.Bind<ProcessMonitor>().To<ProcessMonitor>()
+				.WithConstructorArgument( 
+					TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount))
+				.WithConstructorArgument((long)settings.MemoryLimit);
 			var aiPath = args[0];
-            //var settings = new Settings("settings.txt");
-            //var logger = LogManager.GetLogger("results");
-            //var tester = new AiTester(settings, logger);
-            //var gameVis = new GameVisualizer();
-            //var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
-            //var monitor = new ProcessMonitor(
-            //    TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), 
-            //    settings.MemoryLimit);
-            if (File.Exists(aiPath))
-            {
-                Container.Get<AiTester>().TestSingleFile(
-                aiPath,
-                Container.Get<MapGenerator>(),
-                Container.Get<GameVisualizer>(),
-                Container.Get<ProcessMonitor>());
-            }
-            else
-                Console.WriteLine("No AI exe-file " + aiPath);
+			//var settings = new Settings("settings.txt");
+			//var logger = LogManager.GetLogger("results");
+			//var tester = new AiTester(settings, logger);
+			//var gameVis = new GameVisualizer();
+			//var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
+			//var monitor = new ProcessMonitor(
+			//	TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), 
+			//	settings.MemoryLimit);
+			if (File.Exists(aiPath))
+			{
+				container.Get<AiTester>().TestSingleFile(
+				aiPath,
+				container.Get<MapGenerator>(),
+				container.Get<GameVisualizer>(),
+				container.Get<ProcessMonitor>());
+			}
+			else
+				Console.WriteLine("No AI exe-file " + aiPath);
 		}
 	}
 }
