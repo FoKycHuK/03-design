@@ -7,25 +7,26 @@ namespace battleships
 {
 	public class AiTester
 	{
-        private static readonly Logger resultsLog = LogManager.GetLogger("results");
+		private static readonly Logger resultsLog = LogManager.GetLogger("results");
 		private readonly Settings settings;
 		readonly string exe;
 		readonly MapGenerator gen;
 		readonly GameVisualizer vis;
 		readonly ProcessMonitor monitor;
-		Func<Map, Ai, Game> gameCreator;
-        Func<string, ProcessMonitor, Ai> aiCreator;
+		Func<Map, Ai, Game> CreateGame;
+		Func<string, ProcessMonitor, Ai> CreateAi;
 
 		public AiTester(Settings settings, string exe, MapGenerator generator,
-			GameVisualizer visualizator, ProcessMonitor monitor, Fabric fabric)
+			GameVisualizer visualizator, ProcessMonitor monitor, 
+			Func<Map, Ai, Game> CreateGame, Func<string, ProcessMonitor, Ai> CreateAi)
 		{
 			this.settings = settings;
 			this.gen = generator;
 			this.exe = exe;
 			this.vis = visualizator;
 			this.monitor = monitor;
-			gameCreator = fabric.CreateGame;
-			aiCreator = fabric.CreateAi;
+			this.CreateGame = CreateGame;
+			this.CreateAi = CreateAi;
 		}
 
 		public void TestSingleFile()
@@ -34,11 +35,11 @@ namespace battleships
 			var crashes = 0;
 			var gamesPlayed = 0;
 			var shots = new List<int>();
-            var ai = aiCreator(exe, monitor);
+			var ai = CreateAi(exe, monitor);
 			for (var gameIndex = 0; gameIndex < settings.GamesCount; gameIndex++)
 			{
 				var map = gen.GenerateMap();
-				var game = gameCreator(map, ai);
+				var game = CreateGame(map, ai);
 				RunGameToEnd(game, vis);
 				gamesPlayed++;
 				badShots += game.BadShots;
@@ -46,7 +47,7 @@ namespace battleships
 				{
 					crashes++;
 					if (crashes > settings.CrashLimit) break;
-					ai = aiCreator(exe, monitor);
+					ai = CreateAi(exe, monitor);
 				}
 				else
 					shots.Add(game.TurnsCount);

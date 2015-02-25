@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace battleships
 {
-    public class Fabric
+    public class Factory
     {
         public Game CreateGame(Map map, Ai ai)
         {
