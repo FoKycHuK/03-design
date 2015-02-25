@@ -7,26 +7,25 @@ namespace battleships
 {
 	public class AiTester
 	{
-		private readonly Logger resultsLog;
+        private static readonly Logger resultsLog = LogManager.GetLogger("results");
 		private readonly Settings settings;
 		readonly string exe;
 		readonly MapGenerator gen;
 		readonly GameVisualizer vis;
 		readonly ProcessMonitor monitor;
-		Game game;
-		Ai ai;
+		Func<Map, Ai, Game> gameCreator;
+        Func<string, ProcessMonitor, Ai> aiCreator;
 
-		public AiTester(Settings settings, Logger resultsLog, string exe, MapGenerator generator,
-			GameVisualizer visualizator, ProcessMonitor monitor, Game game, Ai ai)
+		public AiTester(Settings settings, string exe, MapGenerator generator,
+			GameVisualizer visualizator, ProcessMonitor monitor, Fabric fabric)
 		{
-			this.resultsLog = resultsLog;
 			this.settings = settings;
 			this.gen = generator;
 			this.exe = exe;
 			this.vis = visualizator;
 			this.monitor = monitor;
-			this.game = game;
-			this.ai = ai;
+			gameCreator = fabric.CreateGame;
+			aiCreator = fabric.CreateAi;
 		}
 
 		public void TestSingleFile()
@@ -35,10 +34,11 @@ namespace battleships
 			var crashes = 0;
 			var gamesPlayed = 0;
 			var shots = new List<int>();
+            var ai = aiCreator(exe, monitor);
 			for (var gameIndex = 0; gameIndex < settings.GamesCount; gameIndex++)
 			{
 				var map = gen.GenerateMap();
-				game = game.Create(map, ai);
+				var game = gameCreator(map, ai);
 				RunGameToEnd(game, vis);
 				gamesPlayed++;
 				badShots += game.BadShots;
@@ -46,7 +46,7 @@ namespace battleships
 				{
 					crashes++;
 					if (crashes > settings.CrashLimit) break;
-					ai = ai.Create(exe, monitor);
+					ai = aiCreator(exe, monitor);
 				}
 				else
 					shots.Add(game.TurnsCount);

@@ -100,10 +100,5 @@ namespace battleships
 				throw new Exception("Wrong ai output: " + output, e);
 			}
 		}
-
-		public Ai Create(string exePath, ProcessMonitor monitor)
-		{
-			return new Ai(exePath, monitor);
-		}
 	}
 }

@@ -18,21 +18,21 @@ namespace battleships
 				Console.WriteLine("Usage: {0} <ai.exe>", Process.GetCurrentProcess().ProcessName);
 				return;
 			}
+            var fabric = new Fabric();
 			var aiPath = args[0];
 			var container = new StandardKernel();
 			container.Bind<Settings>().To<Settings>().WithConstructorArgument("settings.txt");
 			var settings = container.Get<Settings>();
-			container.Bind<AiTester>().To<AiTester>()
-				.WithConstructorArgument(LogManager.GetLogger("results"))
-				.WithConstructorArgument(aiPath);
+            //container.Bind<Func<Map, Ai, Game>>().ToConstant(fabric.CreateGame);
+            container.Bind<AiTester>().To<AiTester>()
+                .WithConstructorArgument(aiPath);
 			container.Bind<Random>().ToConstant(new Random(settings.RandomSeed));
 			container.Bind<Ai>().To<Ai>().WithConstructorArgument(aiPath);
 			container.Bind<Game>().To<Game>().WithConstructorArgument(container.Get<MapGenerator>().GenerateMap());
 			container.Bind<ProcessMonitor>().To<ProcessMonitor>()
 				.WithConstructorArgument(
 					TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount))
-				.WithConstructorArgument((long)settings.MemoryLimit);
-			
+				.WithConstructorArgument((long)settings.MemoryLimit);            
 			//var settings = new Settings("settings.txt");
 			//var logger = LogManager.GetLogger("results");
 			//var tester = new AiTester(settings, logger);
