@@ -19,6 +19,11 @@ namespace battleships
 				return;
 			}
 			var aiPath = args[0];
+			if (!File.Exists(aiPath))
+			{
+				Console.WriteLine("No AI exe-file " + aiPath);
+				return;
+			}
 			var settings = new Settings("settings.txt");
 			var monitor = new ProcessMonitor(TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), settings.MemoryLimit);
 			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
@@ -29,11 +34,9 @@ namespace battleships
 				.Select(x => new Game(gen.GenerateMap(), ai))
 				.ToArray();
 			var tester = new AiTester(settings);
-			tester.logMessage += logger.Info;
-			if (File.Exists(aiPath))
-				tester.TestSingleFile(games, ai);
-			else
-				Console.WriteLine("No AI exe-file " + aiPath);
+			var statistic = tester.TestSingleFile(games, ai);
+			Console.WriteLine(statistic.GetMessageWithHeaders());
+			logger.Info(statistic.Message);
 		}
 	}
 }
