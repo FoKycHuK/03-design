@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -19,6 +20,8 @@ namespace battleships
 			var aiPath = args[0];
 			var settings = new Settings("settings.txt");
 			var tester = new AiTester(settings);
+			var logger = LogManager.GetLogger("results");
+			tester.logMessage += logger.Info;
 			if (File.Exists(aiPath))
 				tester.TestSingleFile(aiPath);
 			else
