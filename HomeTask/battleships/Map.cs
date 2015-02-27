@@ -85,8 +85,8 @@ namespace battleships
 	///<summary>Карта</summary>
 	public class Map
 	{
-		private static MapCell[,] cells;
-		public static Ship[,] shipsMap;
+		private MapCell[,] cells;
+		public Ship[,] shipsMap;
 
 		///<summary>Конструктор</summary>
 		public Map(int width, int height)

@@ -16,21 +16,16 @@ namespace battleships
 			this.settings = settings;
 		}
 
-		public void TestSingleFile(string exe)
+		public void TestSingleFile(Game[] games, Ai ai)
 		{
-			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
 			var vis = new GameVisualizer();
-			var monitor = new ProcessMonitor(TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), settings.MemoryLimit);
 			var badShots = 0;
 			var crashes = 0;
 			var gamesPlayed = 0;
 			var shots = new List<int>();
-			var ai = new Ai(exe);
-			ai.registerProcess += monitor.Register;
-			for (var gameIndex = 0; gameIndex < settings.GamesCount; gameIndex++)
+			for (var gameIndex = 0; gameIndex < games.Length; gameIndex++)
 			{
-				var map = gen.GenerateMap();
-				var game = new Game(map, ai);
+				var game = games[gameIndex];
 				RunGameToEnd(game, vis);
 				gamesPlayed++;
 				badShots += game.BadShots;
