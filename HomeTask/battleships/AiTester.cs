@@ -38,8 +38,8 @@ namespace battleships
 				{
 					crashes++;
 					if (crashes > settings.CrashLimit) break;
-					ai = new Ai(exe);
-					ai.registerProcess += monitor.Register;
+					ai.Dispose();
+					//ai.registerProcess += monitor.Register;
 				}
 				else
 					shots.Add(game.TurnsCount);
