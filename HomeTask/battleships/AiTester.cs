@@ -9,6 +9,7 @@ namespace battleships
 	{
 		//private static readonly Logger resultsLog = LogManager.GetLogger("results");
 		//public event Action<string> logMessage;
+		public event Action<Game> visualizeIt;
 		private readonly Settings settings;
 
 		public AiTester(Settings settings)
@@ -56,7 +57,8 @@ namespace battleships
 				game.MakeStep();
 				if (settings.Interactive)
 				{
-					vis.Visualize(game);
+					if (visualizeIt != null)
+						visualizeIt(game);
 					if (game.AiCrashed)
 						Console.WriteLine(game.LastError.Message);
 					Console.ReadKey();

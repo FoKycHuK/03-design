@@ -25,6 +25,7 @@ namespace battleships
 				return;
 			}
 			var settings = new Settings("settings.txt");
+			var vis = new GameVisualizer();
 			var monitor = new ProcessMonitor(TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), settings.MemoryLimit);
 			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
 			var ai = new Ai(aiPath);
@@ -34,6 +35,7 @@ namespace battleships
 				.Select(x => new Game(gen.GenerateMap(), ai))
 				.ToArray();
 			var tester = new AiTester(settings);
+			tester.visualizeIt += vis.Visualize;
 			var statistic = tester.TestSingleFile(games, ai);
 			Console.WriteLine(statistic.GetMessageWithHeaders());
 			logger.Info(statistic.Message);
