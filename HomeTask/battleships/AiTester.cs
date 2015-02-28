@@ -9,12 +9,13 @@ namespace battleships
 	{
 		//private static readonly Logger resultsLog = LogManager.GetLogger("results");
 		//public event Action<string> logMessage;
-		public event Action<Game> visualizeIt;
-		private readonly Settings settings;
+		Action<Game> visualizeIt;
+		readonly Settings settings;
 
-		public AiTester(Settings settings)
+		public AiTester(Settings settings, Action<Game> visualizeIt)
 		{
 			this.settings = settings;
+			this.visualizeIt = visualizeIt;
 		}
 
 		public Statistics TestSingleFile(Game[] games, Ai ai)
@@ -34,8 +35,6 @@ namespace battleships
 				{
 					crashes++;
 					if (crashes > settings.CrashLimit) break;
-					ai.Dispose();
-					//ai.registerProcess += monitor.Register;
 				}
 				else
 					shots.Add(game.TurnsCount);

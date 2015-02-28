@@ -28,14 +28,12 @@ namespace battleships
 			var vis = new GameVisualizer();
 			var monitor = new ProcessMonitor(TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), settings.MemoryLimit);
 			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
-			var ai = new Ai(aiPath);
-			ai.registerProcess += monitor.Register;
+			var ai = new Ai(aiPath, monitor.Register);
 			var logger = LogManager.GetLogger("results");
 			var games = Enumerable.Range(0, settings.GamesCount)
 				.Select(x => new Game(gen.GenerateMap(), ai))
 				.ToArray();
-			var tester = new AiTester(settings);
-			tester.visualizeIt += vis.Visualize;
+			var tester = new AiTester(settings, vis.Visualize);
 			var statistic = tester.TestSingleFile(games, ai);
 			Console.WriteLine(statistic.GetMessageWithHeaders());
 			logger.Info(statistic.Message);

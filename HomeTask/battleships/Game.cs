@@ -63,6 +63,7 @@ namespace battleships
 				log.Info("Ai {0} crashed", ai.Name);
 				log.Error(e);
 				LastError = e;
+				ai.Dispose();
 				return false;
 			}
 		}
