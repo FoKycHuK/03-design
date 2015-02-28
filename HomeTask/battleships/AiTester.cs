@@ -7,14 +7,14 @@ namespace battleships
 {
 	public class AiTester
 	{
-		private static readonly Logger resultsLog = LogManager.GetLogger("results");
-		private readonly Settings settings;
+		static readonly Logger resultsLog = LogManager.GetLogger("results");
+		readonly Settings settings;
 		readonly string exe;
 		readonly MapGenerator gen;
 		readonly GameVisualizer vis;
 		readonly ProcessMonitor monitor;
-		Func<Map, Ai, Game> CreateGame;
-		Func<string, ProcessMonitor, Ai> CreateAi;
+		readonly Func<Map, Ai, Game> CreateGame;
+		readonly Func<string, ProcessMonitor, Ai> CreateAi;
 
 		public AiTester(Settings settings, string exe, MapGenerator generator,
 			GameVisualizer visualizator, ProcessMonitor monitor, 

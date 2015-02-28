@@ -32,9 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net45-full\Ninject.Extensions.Factory.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\external_packages\NLog.dll</HintPath>
@@ -66,12 +74,29 @@
     <Compile Include="Vector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Castle.Core.3.2.0\Castle.Core.3.2.0.nupkg" />
     <None Include="Ninject.3.2.3-unstable-012\Ninject.3.2.3-unstable-012.nupkg" />
+    <None Include="Ninject.Extensions.Factory.3.2.2-unstable-002\Ninject.Extensions.Factory.3.2.2-unstable-002.nupkg" />
     <None Include="README.md" />
     <None Include="settings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
+    <Content Include="Castle.Core.3.2.0\ASL - Apache Software Foundation License.txt" />
+    <Content Include="Castle.Core.3.2.0\BreakingChanges.txt" />
+    <Content Include="Castle.Core.3.2.0\Changes.txt" />
+    <Content Include="Castle.Core.3.2.0\lib\net35\Castle.Core.dll" />
+    <Content Include="Castle.Core.3.2.0\lib\net35\Castle.Core.xml" />
+    <Content Include="Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll" />
+    <Content Include="Castle.Core.3.2.0\lib\net40-client\Castle.Core.xml" />
+    <Content Include="Castle.Core.3.2.0\lib\net45\Castle.Core.dll" />
+    <Content Include="Castle.Core.3.2.0\lib\net45\Castle.Core.xml" />
+    <Content Include="Castle.Core.3.2.0\lib\sl4\Castle.Core.dll" />
+    <Content Include="Castle.Core.3.2.0\lib\sl4\Castle.Core.xml" />
+    <Content Include="Castle.Core.3.2.0\lib\sl5\Castle.Core.dll" />
+    <Content Include="Castle.Core.3.2.0\lib\sl5\Castle.Core.xml" />
+    <Content Include="Castle.Core.3.2.0\License.txt" />
+    <Content Include="Castle.Core.3.2.0\readme.txt" />
     <Content Include="Ninject.3.2.3-unstable-012\lib\net35\Ninject.dll" />
     <Content Include="Ninject.3.2.3-unstable-012\lib\net35\Ninject.xml" />
     <Content Include="Ninject.3.2.3-unstable-012\lib\net40\Ninject.dll" />
@@ -90,6 +115,24 @@
     <Content Include="Ninject.3.2.3-unstable-012\lib\sl4\Ninject.xml" />
     <Content Include="Ninject.3.2.3-unstable-012\lib\sl5\Ninject.dll" />
     <Content Include="Ninject.3.2.3-unstable-012\lib\sl5\Ninject.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net35\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net35\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net40\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net40\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net45-full\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\net45-full\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl2\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl2\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl3-wp\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl3-wp\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl3\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl3\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl4-windowsphone71\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl4-windowsphone71\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl4\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl4\Ninject.Extensions.Factory.xml" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl5\Ninject.Extensions.Factory.dll" />
+    <Content Include="Ninject.Extensions.Factory.3.2.2-unstable-002\lib\sl5\Ninject.Extensions.Factory.xml" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

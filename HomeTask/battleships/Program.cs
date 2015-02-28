@@ -19,16 +19,16 @@ namespace battleships
 				return;
 			}
 			var aiPath = args[0];
-			Func<Map, Ai, Game> createGame = (map, ai) => new Game(map, ai);
-			Func<string, ProcessMonitor, Ai> createAi = (path, monitor) => new Ai(path, monitor);
+			//Func<Map, Ai, Game> createGame = (map, ai) => new Game(map, ai);
+			//Func<string, ProcessMonitor, Ai> createAi = (path, monitor) => new Ai(path, monitor);
 			var container = new StandardKernel();
 			container.Bind<Settings>().To<Settings>().WithConstructorArgument("settings.txt");
 			var settings = container.Get<Settings>();
 			container.Bind<AiTester>().To<AiTester>()
 				.WithConstructorArgument(aiPath);
 			container.Bind<Random>().ToConstant(new Random(settings.RandomSeed));
-			container.Bind<Func<Map, Ai, Game>>().ToMethod(ctx => createGame);
-			container.Bind<Func<string, ProcessMonitor, Ai>>().ToMethod(ctx => createAi);
+			//container.Bind<Func<Map, Ai, Game>>().ToMethod(ctx => createGame);
+			//container.Bind<Func<string, ProcessMonitor, Ai>>().ToMethod(ctx => createAi);
 			//var settings = new Settings("settings.txt");
 			//var logger = LogManager.GetLogger("results");
 			//var tester = new AiTester(settings, logger);
