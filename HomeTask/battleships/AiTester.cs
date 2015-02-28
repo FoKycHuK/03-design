@@ -11,18 +11,16 @@ namespace battleships
 		readonly Settings settings;
 		readonly MapGenerator gen;
 		readonly GameVisualizer vis;
-		readonly ProcessMonitor monitor;
 		readonly Func<Map, Ai, Game> CreateGame;
 		readonly Func<Ai> CreateAi;
 
 		public AiTester(Settings settings, MapGenerator generator,
-			GameVisualizer visualizator, ProcessMonitor monitor, 
+			GameVisualizer visualizator,
 			Func<Map, Ai, Game> CreateGame, Func<Ai> CreateAi)
 		{
 			this.settings = settings;
 			this.gen = generator;
 			this.vis = visualizator;
-			this.monitor = monitor;
 			this.CreateGame = CreateGame;
 			this.CreateAi = CreateAi;
 		}
