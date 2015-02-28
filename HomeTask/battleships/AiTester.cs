@@ -14,11 +14,11 @@ namespace battleships
 		readonly GameVisualizer vis;
 		readonly ProcessMonitor monitor;
 		readonly Func<Map, Ai, Game> CreateGame;
-		readonly Func<string, ProcessMonitor, Ai> CreateAi;
+		readonly Func<Ai> CreateAi;
 
 		public AiTester(Settings settings, string exe, MapGenerator generator,
 			GameVisualizer visualizator, ProcessMonitor monitor, 
-			Func<Map, Ai, Game> CreateGame, Func<string, ProcessMonitor, Ai> CreateAi)
+			Func<Map, Ai, Game> CreateGame, Func<Ai> CreateAi)
 		{
 			this.settings = settings;
 			this.gen = generator;
@@ -35,7 +35,7 @@ namespace battleships
 			var crashes = 0;
 			var gamesPlayed = 0;
 			var shots = new List<int>();
-			var ai = CreateAi(exe, monitor);
+			var ai = CreateAi();
 			for (var gameIndex = 0; gameIndex < settings.GamesCount; gameIndex++)
 			{
 				var map = gen.GenerateMap();
@@ -47,7 +47,7 @@ namespace battleships
 				{
 					crashes++;
 					if (crashes > settings.CrashLimit) break;
-					ai = CreateAi(exe, monitor);
+					ai = CreateAi();
 				}
 				else
 					shots.Add(game.TurnsCount);
