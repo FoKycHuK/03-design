@@ -9,20 +9,18 @@ namespace battleships
 	{
 		static readonly Logger resultsLog = LogManager.GetLogger("results");
 		readonly Settings settings;
-		readonly string exe;
 		readonly MapGenerator gen;
 		readonly GameVisualizer vis;
 		readonly ProcessMonitor monitor;
 		readonly Func<Map, Ai, Game> CreateGame;
 		readonly Func<Ai> CreateAi;
 
-		public AiTester(Settings settings, string exe, MapGenerator generator,
+		public AiTester(Settings settings, MapGenerator generator,
 			GameVisualizer visualizator, ProcessMonitor monitor, 
 			Func<Map, Ai, Game> CreateGame, Func<Ai> CreateAi)
 		{
 			this.settings = settings;
 			this.gen = generator;
-			this.exe = exe;
 			this.vis = visualizator;
 			this.monitor = monitor;
 			this.CreateGame = CreateGame;

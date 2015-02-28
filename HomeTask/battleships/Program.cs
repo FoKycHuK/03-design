@@ -25,8 +25,6 @@ namespace battleships
 			container.Bind<Settings>().To<Settings>().WithConstructorArgument("settings.txt");
 			var settings = container.Get<Settings>();
 			var monitor = container.Get<ProcessMonitor>();
-			container.Bind<AiTester>().To<AiTester>()
-				.WithConstructorArgument(aiPath);
 			container.Bind<Ai>().To<Ai>()
 				.WithConstructorArgument(aiPath)
 				.WithConstructorArgument(monitor);
