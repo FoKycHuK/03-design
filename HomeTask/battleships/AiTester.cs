@@ -5,6 +5,14 @@ using NLog;
 
 namespace battleships
 {
+	public static class ExtentionToGamesArray 
+	{
+		public static Statistics GetStatisticFromAiTester(this Game[] games, Ai ai, AiTester tester) //мухаха
+		{
+			return tester.TestAi(games, ai);
+		}
+	}
+
 	public class AiTester
 	{
 		//private static readonly Logger resultsLog = LogManager.GetLogger("results");
@@ -18,9 +26,8 @@ namespace battleships
 			this.visualizeIt = visualizeIt;
 		}
 
-		public Statistics TestSingleFile(Game[] games, Ai ai)
+		public Statistics TestAi(Game[] games, Ai ai)
 		{
-			var vis = new GameVisualizer();
 			var badShots = 0;
 			var crashes = 0;
 			var gamesPlayed = 0;
@@ -28,7 +35,7 @@ namespace battleships
 			for (var gameIndex = 0; gameIndex < games.Length; gameIndex++)
 			{
 				var game = games[gameIndex];
-				RunGameToEnd(game, vis);
+				RunGameToEnd(game);
 				gamesPlayed++;
 				badShots += game.BadShots;
 				if (game.AiCrashed)
@@ -49,7 +56,7 @@ namespace battleships
 			return new Statistics(ai.Name, shots, crashes, badShots, gamesPlayed, settings);
 		}
 
-		private void RunGameToEnd(Game game, GameVisualizer vis)
+		private void RunGameToEnd(Game game)
 		{
 			while (!game.IsOver())
 			{

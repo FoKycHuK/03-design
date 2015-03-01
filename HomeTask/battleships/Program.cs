@@ -30,13 +30,16 @@ namespace battleships
 			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
 			var ai = new Ai(aiPath, monitor.Register);
 			var logger = LogManager.GetLogger("results");
-			var games = Enumerable.Range(0, settings.GamesCount)
-				.Select(x => new Game(gen.GenerateMap(), ai))
-				.ToArray();
 			var tester = new AiTester(settings, vis.Visualize);
-			var statistic = tester.TestSingleFile(games, ai);
-			Console.WriteLine(statistic.GetMessageWithHeaders());
-			logger.Info(statistic.Message);
+
+			var statistics = Enumerable.Range(0, settings.GamesCount)
+				.Select(x => gen.GenerateMap())
+				.Select(x => new Game(x, ai))
+				.ToArray()
+				.GetStatisticFromAiTester(ai, tester);
+
+			Console.WriteLine(statistics.GetMessageWithHeaders());
+			logger.Info(statistics.Message);
 		}
 	}
 }
