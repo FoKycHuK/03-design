@@ -13,7 +13,7 @@ namespace battleships
 	public class Game
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly Ai ai;
+		public readonly Ai ai;
 
 		public Game(Map map, Ai ai)
 		{

@@ -34,9 +34,11 @@ namespace battleships
 
 			var statistics = Enumerable.Range(0, settings.GamesCount)
 				.Select(x => gen.GenerateMap())
-				.Select(x => new Game(x, ai))
-				.ToArray()
-				.GetStatisticFromAiTester(ai, tester);
+				.Select(map => new Game(map, ai))
+				.Select(game => tester.RunGameToEnd(game))
+				.Aggregate((x, y) => x.AppendStatistics(y))
+				.CalculateStatistics(settings);
+
 
 			Console.WriteLine(statistics.GetMessageWithHeaders());
 			logger.Info(statistics.Message);

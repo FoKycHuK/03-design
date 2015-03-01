@@ -5,20 +5,11 @@ using NLog;
 
 namespace battleships
 {
-	public static class ExtentionToGamesArray 
-	{
-		public static Statistics GetStatisticFromAiTester(this Game[] games, Ai ai, AiTester tester) //мухаха
-		{
-			return tester.TestAi(games, ai);
-		}
-	}
-
 	public class AiTester
 	{
-		//private static readonly Logger resultsLog = LogManager.GetLogger("results");
-		//public event Action<string> logMessage;
 		Action<Game> visualizeIt;
 		readonly Settings settings;
+		int gameIndex = 0;
 
 		public AiTester(Settings settings, Action<Game> visualizeIt)
 		{
@@ -26,37 +17,7 @@ namespace battleships
 			this.visualizeIt = visualizeIt;
 		}
 
-		public Statistics TestAi(Game[] games, Ai ai)
-		{
-			var badShots = 0;
-			var crashes = 0;
-			var gamesPlayed = 0;
-			var shots = new List<int>();
-			for (var gameIndex = 0; gameIndex < games.Length; gameIndex++)
-			{
-				var game = games[gameIndex];
-				RunGameToEnd(game);
-				gamesPlayed++;
-				badShots += game.BadShots;
-				if (game.AiCrashed)
-				{
-					crashes++;
-					if (crashes > settings.CrashLimit) break;
-				}
-				else
-					shots.Add(game.TurnsCount);
-				if (settings.Verbose)
-				{
-					Console.WriteLine(
-						"Game #{3,4}: Turns {0,4}, BadShots {1}{2}",
-						game.TurnsCount, game.BadShots, game.AiCrashed ? ", Crashed" : "", gameIndex);
-				}
-			}
-			ai.Dispose();
-			return new Statistics(ai.Name, shots, crashes, badShots, gamesPlayed, settings);
-		}
-
-		private void RunGameToEnd(Game game)
+		public Statistics RunGameToEnd(Game game)
 		{
 			while (!game.IsOver())
 			{
@@ -70,6 +31,14 @@ namespace battleships
 					Console.ReadKey();
 				}
 			}
+			if (settings.Verbose)
+			{
+				Console.WriteLine(
+					"Game #{3,4}: Turns {0,4}, BadShots {1}{2}",
+					game.TurnsCount, game.BadShots, game.AiCrashed ? ", Crashed" : "", gameIndex);
+			}
+			gameIndex++;
+			return new Statistics(game.ai.Name, new List<int>() {game.TurnsCount}, game.AiCrashed ? 1 : 0, game.BadShots, 1) ;
 		}
 	}
 }

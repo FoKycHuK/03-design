@@ -10,21 +10,33 @@ namespace battleships
 	{
 		readonly string aiName;
 		readonly List<int> shots;
-		readonly int crashes;
-		readonly int badShots;
-		readonly int gamesPlayed;
-		readonly Settings settings;
+		int crashes;
+		int badShots;
+		int gamesPlayed;
 		public string Message {get; private set;}
 
-		public Statistics(string aiName, List<int> shots, int crashes, int badShots, int gamesPlayed, Settings settings)
+		public Statistics(string aiName, List<int> shots, int crashes, int badShots, int gamesPlayed)
 		{
 			this.aiName = aiName;
 			this.shots = shots;
 			this.crashes = crashes;
 			this.badShots = badShots;
 			this.gamesPlayed = gamesPlayed;
-			this.settings = settings;
+		}
 
+		public Statistics AppendStatistics(Statistics statistics)
+		{
+			if (aiName != statistics.aiName)
+				throw new Exception("Статистики относятся к разным Ai");
+			shots.AddRange(statistics.shots);
+			crashes += statistics.crashes;
+			badShots += statistics.badShots;
+			gamesPlayed += statistics.gamesPlayed;
+			return this;
+		}
+
+		public Statistics CalculateStatistics(Settings settings)
+		{
 			if (shots.Count == 0) shots.Add(1000 * 1000);
 			shots.Sort();
 			var median = shots.Count % 2 == 1 ? shots[shots.Count / 2] : (shots[shots.Count / 2] + shots[(shots.Count + 1) / 2]) / 2;
@@ -35,6 +47,7 @@ namespace battleships
 			var efficiencyScore = 100.0 * (settings.Width * settings.Height - mean) / (settings.Width * settings.Height);
 			var score = efficiencyScore - crashPenalty - badFraction;
 			Message = FormatTableRow(new object[] { aiName, mean, sigma, median, crashes, badFraction, gamesPlayed, score });
+			return this;
 		}
 
 		public string GetMessageWithHeaders()
