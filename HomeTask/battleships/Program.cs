@@ -30,7 +30,7 @@ namespace battleships
 			var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
 			var ai = new Ai(aiPath, monitor.Register);
 			var logger = LogManager.GetLogger("results");
-			var tester = new AiTester(settings, vis.Visualize);
+			var tester = new AiTester(settings, vis.Visualize, ai.Name);
 
 			var statistics = Enumerable.Range(0, settings.GamesCount)
 				.Select(x => gen.GenerateMap())

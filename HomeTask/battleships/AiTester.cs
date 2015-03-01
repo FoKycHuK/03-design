@@ -10,11 +10,13 @@ namespace battleships
 		Action<Game> visualizeIt;
 		readonly Settings settings;
 		int gameIndex = 0;
+		string aiName;
 
-		public AiTester(Settings settings, Action<Game> visualizeIt)
+		public AiTester(Settings settings, Action<Game> visualizeIt, string aiName)
 		{
 			this.settings = settings;
 			this.visualizeIt = visualizeIt;
+			this.aiName = aiName;
 		}
 
 		public Statistics RunGameToEnd(Game game)
@@ -38,7 +40,7 @@ namespace battleships
 					game.TurnsCount, game.BadShots, game.AiCrashed ? ", Crashed" : "", gameIndex);
 			}
 			gameIndex++;
-			return new Statistics(game.ai.Name, new List<int>() {game.TurnsCount}, game.AiCrashed ? 1 : 0, game.BadShots, 1) ;
+			return new Statistics(aiName, new List<int>() {game.TurnsCount}, game.AiCrashed ? 1 : 0, game.BadShots, 1) ;
 		}
 	}
 }
